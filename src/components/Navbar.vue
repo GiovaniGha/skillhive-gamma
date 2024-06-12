@@ -44,8 +44,8 @@
 
     const rutas = ref([
         { nombre: 'Home', url: '/' },
-        { nombre: 'About', url: '/about' },
-        { nombre: 'Contact', url: '/contact' },
+        { nombre: 'About', url: '/' },
+        { nombre: 'Contact', url: '/' },
     ]);
 
 </script>

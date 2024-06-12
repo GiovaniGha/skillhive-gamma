@@ -3,7 +3,7 @@
         <ul class="flex flex-col gap-6 mt-5">
             <li v-for="(ruta, index) in rutas" :key="index" :title="ruta.titulo" class="flex justify-center">
                 <RouterLink :to="ruta.url">
-                    
+                    <component :is="ruta.icono" class="w-8 h-8"/>
                 </RouterLink>
             </li>
         </ul>
@@ -17,10 +17,10 @@ import { RouterLink } from 'vue-router';
 
 const rutas = ref([
     {titulo: 'Inicio', url: '/', icono: IconHome},
-    {titulo: 'Carrito', url: '/carrito', icono: IconShoppingCart},
-    {titulo: 'Agregar', url: '/agregar', icono: IconPlus},
-    {titulo: 'Mensajes', url: '/mensajes', icono: IconMessage},
-    {titulo: 'Open comissions', url: '/open-comissions', icono: IconBuildingStore},
-    {titulo: 'Estadisticas', url: '/estadisticas', icono: IconChartPie}
+    {titulo: 'Carrito', url: '/', icono: IconShoppingCart},
+    {titulo: 'Agregar', url: '/', icono: IconPlus},
+    {titulo: 'Mensajes', url: '/', icono: IconMessage},
+    {titulo: 'Open comissions', url: '/', icono: IconBuildingStore},
+    {titulo: 'Estadisticas', url: '/', icono: IconChartPie}
 ]);
 </script>
