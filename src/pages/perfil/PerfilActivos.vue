@@ -1,11 +1,17 @@
 <template>
     <div>
 
-        <h1>Perfil activos</h1>
+        <PerfilTabMenu />
+
+        <main>
+
+
+            
+        </main>
 
     </div>
 </template>
 
 <script setup>
-
+import PerfilTabMenu from '../../components/perfil/PerfilTabMenu.vue';
 </script>

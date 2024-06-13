@@ -1,5 +1,5 @@
 <template>
-    <div class="navbar bg-base-100 fixed top-0 z-10">
+    <div class="navbar bg-base-100 fixed top-0 z-10 w-full">
         <div class="navbar-start">
             <Logo />
         </div>

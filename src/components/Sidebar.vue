@@ -1,5 +1,5 @@
 <template>
-    <div class="bg-base-100 w-14 h-[calc(100vh-68px)] fixed top-[66px] z-10">
+     <div class="bg-base-100 w-14 h-[calc(100vh-66px)] fixed top-[66px] z-10 left-0">
         <ul class="flex flex-col gap-6 mt-5">
             <li v-for="(ruta, index) in rutas" :key="index" :title="ruta.titulo" class="flex justify-center">
                 <RouterLink :to="ruta.url">
