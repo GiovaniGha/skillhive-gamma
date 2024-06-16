@@ -1,7 +1,7 @@
 <template>
     <div>
 
-        <PerfilTabMenu />
+        <PerfilTabMenu active="perfil-activos" />
 
         <main>
 

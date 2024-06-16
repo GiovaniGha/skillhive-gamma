@@ -9,10 +9,14 @@
             </main>
         </div>
     </div>
+
+    <PublicacionModal />
+
 </template>
 
 <script setup>
     import Navbar from './components/Navbar.vue';
     import Sidebar from './components/Sidebar.vue';
+    import PublicacionModal from './components/publicaciones/PublicacionModal.vue';
     import { RouterView } from 'vue-router'; 
 </script>

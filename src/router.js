@@ -1,14 +1,14 @@
 import { createRouter, createWebHistory } from "vue-router";
-import Home from "../pages/Home.vue";
-import Login from "../pages/login/Login.vue";
-import Registro from "../pages/registro/Registro.vue";
-import Carrito from "../pages/carrito/Carrito.vue";
-import Pagar from "../pages/carrito/Pagar.vue";
-import Perfil from "../pages/perfil/Perfil.vue";
-import PerfilHome from "../pages/perfil/PerfilHome.vue";
-import PerfilActivos from "../pages/perfil/PerfilActivos.vue";
-import PerfilPublicaciones from "../pages/perfil/PerfilPublicaciones.vue";
-import PerfilServicios from "../pages/perfil/PerfilServicios.vue";
+import Home from "./pages/Home.vue";
+import Login from "./pages/login/Login.vue";
+import Registro from "./pages/registro/Registro.vue";
+import Carrito from "./pages/carrito/Carrito.vue";
+import Pagar from "./pages/carrito/Pagar.vue";
+import Perfil from "./pages/perfil/Perfil.vue";
+import PerfilHome from "./pages/perfil/PerfilHome.vue";
+import PerfilActivos from "./pages/perfil/PerfilActivos.vue";
+import PerfilPublicaciones from "./pages/perfil/PerfilPublicaciones.vue";
+import PerfilServicios from "./pages/perfil/PerfilServicios.vue";
 
 const router = createRouter({
     history: createWebHistory(),
