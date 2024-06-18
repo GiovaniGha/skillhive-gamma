@@ -1,4 +1,5 @@
 <template>
+    
     <div class="flex flex-col min-h-screen">
         <Navbar />
         <div class="flex flex-1 mt-[66px] ml-[3.5rem]">
@@ -10,13 +11,10 @@
         </div>
     </div>
 
-    <PublicacionModal />
-
 </template>
 
 <script setup>
     import Navbar from './components/Navbar.vue';
     import Sidebar from './components/Sidebar.vue';
-    import PublicacionModal from './components/publicaciones/PublicacionModal.vue';
     import { RouterView } from 'vue-router'; 
 </script>
