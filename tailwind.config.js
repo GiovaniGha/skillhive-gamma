@@ -5,7 +5,15 @@ export default {
         "./src/**/*.{vue,js,ts,jsx,tsx}",
     ],
     theme: {
-        extend: {},
+        extend: {
+            fontFamily: {
+                sans: ['Poppins', 'sans-serif'],
+              },
+
+            backgroundImage:{
+                'banner': "url('/public/banner.jpg')"
+            }
+        },
     },
     plugins: [
         require('daisyui'),
@@ -25,7 +33,8 @@ export default {
                     "success": "#4ade80",
                     "warning": "#fef08a",          
                     "error": "#f87171"
-                }
+                },
+
             }
         ]
     }
