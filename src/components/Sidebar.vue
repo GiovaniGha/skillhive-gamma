@@ -1,9 +1,9 @@
 <template>
      <div class="bg-base-100 w-14 h-[calc(100vh-66px)] fixed top-[66px] z-10 left-0">
-        <ul class="flex flex-col gap-6 mt-5">
+        <ul class="flex flex-col gap-8 mt-6">
             <li v-for="(ruta, index) in rutas" :key="index" :title="ruta.titulo" class="flex justify-center">
                 <RouterLink :to="ruta.url">
-                    <component :is="ruta.icono" class="w-8 h-8"/>
+                    <component :is="ruta.icono" class="w-7 h-8"/>
                 </RouterLink>
             </li>
         </ul>
@@ -12,15 +12,15 @@
 
 <script setup>
 import { ref } from 'vue';
-import { IconHome, IconShoppingCart, IconPlus, IconMessage, IconBuildingStore, IconChartPie } from '@tabler/icons-vue';
+import { IconHomeFilled, IconShoppingCartFilled, IconCirclePlusFilled, IconMessage, IconCashBanknoteFilled, IconChartPieFilled } from '@tabler/icons-vue';
 import { RouterLink } from 'vue-router';
 
 const rutas = ref([
-    {titulo: 'Inicio', url: '/', icono: IconHome},
-    {titulo: 'Carrito', url: '/', icono: IconShoppingCart},
-    {titulo: 'Agregar', url: '/', icono: IconPlus},
-    {titulo: 'Mensajes', url: '/', icono: IconMessage},
-    {titulo: 'Open comissions', url: '/', icono: IconBuildingStore},
-    {titulo: 'Estadisticas', url: '/', icono: IconChartPie}
+    {titulo: 'Inicio', url: '/', icono: IconHomeFilled},
+    {titulo: 'Carrito', url: '/carrito', icono: IconShoppingCartFilled},
+    {titulo: 'Agregar', url: '/crear-editar', icono: IconCirclePlusFilled },
+    //{titulo: 'Mensajes', url: '/', icono: IconMessage},
+    {titulo: 'Open comissions', url: '/', icono: IconCashBanknoteFilled},
+    {titulo: 'Estadisticas', url: '/', icono: IconChartPieFilled}
 ]);
 </script>

@@ -1,7 +1,7 @@
 <template>
     <div>
 
-        <h1>Registro empres</h1>
+        <h1>Registro empresa</h1>
 
     </div>
 </template>

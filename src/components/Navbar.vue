@@ -4,7 +4,7 @@
             <Logo />
         </div>
         <div class="navbar-center hidden lg:flex">
-            <ul class="menu menu-horizontal px-1">
+            <ul class="menu menu-horizontal gap-2 px-2">
                 <li v-for="ruta in rutas">
                     <RouterLink :to="ruta.url">
                         {{ ruta.nombre }}
@@ -25,12 +25,11 @@
                 <ul class="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
                     <li>
                         <a class="justify-between" href="/perfil/1">
-                            Profile
-                            <span class="badge">New</span>
+                            Perfil
+                            <span class="badge">Nuevo</span>
                         </a>
                     </li>
-                    <li><a href="/">Settings</a></li>
-                    <li><a href="/">Logout</a></li>
+                    <li><RouterLink to="/login">Cerrar Sesión</RouterLink></li>
                 </ul>
             </div>
         </div>
@@ -44,8 +43,8 @@
 
     const rutas = ref([
         { nombre: 'Home', url: '/' },
-        { nombre: 'About', url: '/' },
-        { nombre: 'Contact', url: '/' },
+        { nombre: 'Catalogo', url: '/catalogo/productos' },
+        { nombre: 'Comisiones', url: '/catalogo/comisiones' },
     ]);
 
 </script>

@@ -11,7 +11,12 @@ export default {
               },
 
             backgroundImage:{
-                'banner': "url('/public/banner.jpg')"
+                'banner': "url('/banner.jpg')"
+            }, 
+            colors:{
+                "base-400": "#0C0C1A",
+
+
             }
         },
     },

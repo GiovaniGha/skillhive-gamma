@@ -9,11 +9,11 @@ import PerfilHome from "./pages/perfil/PerfilHome.vue";
 import PerfilActivos from "./pages/perfil/PerfilActivos.vue";
 import PerfilPublicaciones from "./pages/perfil/PerfilPublicaciones.vue";
 import PerfilServicios from "./pages/perfil/PerfilServicios.vue";
-import Publicaciones from "./pages/catalogo/Publicaciones.vue";
-import Empleos from "./pages/catalogo/Empleos.vue";
-import Comisiones from "./pages/catalogo/Comisiones.vue";
-import Productos from "./pages/catalogo/Productos.vue";
 import Catalogo from "./pages/catalogo/Catalogo.vue";
+import Publicacion from "./pages/publicacion/Publicacion.vue";
+import CrearEditar from "./pages/crear-editar/CrearEditar.vue";
+import Confirmacion from "./pages/registro/Confirmacion.vue";
+import RegistroEmpresa from "./pages/registro/RegistroEmpresa.vue";
 
 
 const router = createRouter({
@@ -23,7 +23,8 @@ const router = createRouter({
         {
             path: "/",
             name: "home",
-            component: Home, 
+            component: Home,
+            props: true 
         },
 
         {
@@ -66,9 +67,30 @@ const router = createRouter({
         },
 
         {
-            path: "/registro",
+            path: "/registro/",
             name: "registro",
-            component: Registro,
+            children: [
+                {
+                    path: "freelancer",
+                    name:"registro-freelancer",
+                    component: Registro
+
+                },
+
+                {
+                    path: "empresa",
+                    name:"registro-empresa",
+                    component: RegistroEmpresa
+
+                },
+
+                {
+                    path: "confirmacion",
+                    name:"confirmacion",
+                    component: Confirmacion
+
+                }
+            ]
         },
 
         {
@@ -91,31 +113,43 @@ const router = createRouter({
                 {
                     path:'publicaciones',
                     name:'catalogo-publicaciones',
-                    component: Publicaciones
-
+                    props: true 
                 },
                 {
                     path:'empleos',
                     name:'catalogo-empleos',
-                    component: Empleos
+                    props: true 
                 },
                 {
                     path:'comisiones',
                     name:'catalogo-comisiones',
-                    component: Comisiones
+                    props: true
                 },
                 {
                     path:'productos',
                     name:'catalogo-productos',
-                    component: Productos
+                    props: true
                 }
-
-
             ]
         },
-            
 
+        {
+            path:"/publicacion/:id/tipo",
+            name: 'publicacion',
+            component: Publicacion,
+            props: true 
+            
+        },
+
+        {
+            path:"/crear-editar",
+            name:'crear-editar',
+            component: CrearEditar,
+            props: true
+        },
     ]
+
+    
 });
 
 export default router;
