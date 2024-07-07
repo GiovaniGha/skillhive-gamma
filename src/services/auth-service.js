@@ -1,35 +1,53 @@
-import { API_BASE_URL, axios } from "./config";
+import {API_BASE_URL } from './config'
+import axios from 'axios';
 
 
 export const endpoints_auth = {
 
-    getAllUsers: () => `/users`,
-    getUserbyId: (id) => `/user/${id}`,
-    login: () => `/login`,
-    registroFreelancer: () => `/registro-freelancer`,
-    registroEmpresa: () => `/registro-empresa`,
-    confirmarCorreo: (codigo) => `/confirmar-correo/${codigo}`,
+    getAllUsers: () => `/auth/users`,
+    getUserbyId: (id) => `/auth/user/${id}`,
+    login: () => `/auth/login`,
+    registroFreelancer: () => `/auth/registro-freelancer`,
+    registroEmpresa: () => `/auth/registro-empresa`,
+    confirmarCorreo: (codigo) => `/auth/confirmar-correo/${codigo}`,
 }
 
 
-export const login = async(userData) => { 
+export const login = async (userData) => {
   try {
-      const response = await axios.post(API_BASE_URL + endpoints_auth.login(),userData);
-      return response.data;
-    } catch (error) {
-      console.error('Error al ingresar:', error);
-      throw error;
+        const response = await axios.post(API_BASE_URL + endpoints_auth.login(), userData, {
+        validateStatus: function (status) {
+        return status < 500;
+      }
+    });
+    console.log('exito')
+    if (response.status === 400) {
+      console.error('Datos de inicio de sesión incorrectos:', response.data);
+      throw new Error('Datos de inicio de sesión incorrectos');
     }
-  };
+    return response.data;
+  } catch (error) {
+    console.error('Error al ingresar:', error);
+    throw error;
+  }
+};
 
 
 export const registroFreelancer = async(userData) =>{
     try {
-        const response = await axios.post(API_BASE_URL + endpoints_auth.registroFreelancer(), userData);
-        return response.data;
-      } catch (error) {
-        console.error('Error de registro:', error);
-        throw error;
+        const response = await axios.post(API_BASE_URL + endpoints_auth.registroFreelancer(), userData, {
+            validateStatus: function (status) {
+                return status < 500;
+              }
+            });
+            console.log('exito')
+            if (response.status === 400) {
+              console.error('error de status:', response.data);
+            }
+            return response.data;
+          } catch (error) {
+            console.error('Error al registrar:', error);
+            throw error;
       }
 };
 

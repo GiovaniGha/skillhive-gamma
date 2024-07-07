@@ -20,7 +20,7 @@ const rutas = ref([
     {titulo: 'Carrito', url: '/carrito', icono: IconShoppingCartFilled},
     {titulo: 'Agregar', url: '/crear-editar', icono: IconCirclePlusFilled },
     //{titulo: 'Mensajes', url: '/', icono: IconMessage},
-    {titulo: 'Open comissions', url: '/', icono: IconCashBanknoteFilled},
+    {titulo: 'Open comissions', url: '/open-comission', icono: IconCashBanknoteFilled},
     {titulo: 'Estadisticas', url: '/', icono: IconChartPieFilled}
 ]);
 </script>

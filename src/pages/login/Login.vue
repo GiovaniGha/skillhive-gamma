@@ -24,8 +24,9 @@
                 
             </section>
 
-            <div v-if="validar">
-                <span class="loading loading-dots loading-lg"></span>
+            <div v-if="id" class="flex flex-col items-center">
+                <p>Iniciando</p>
+                <span class="loading loading-spinner loading-lg"></span>
 
             </div>
         
@@ -57,42 +58,34 @@
     import { ref } from 'vue';
 
     const router = useRouter();
-    
+    const id = ref();
     const userData = ref( {
         correo: '',
         password: ''
     });
 
-    const validar = ref(false)
 
-    const enviarDatos =  async () => {
-        console.log(userData.value); 
-
+    const enviarDatos = async () => {
+        console.log('Datos del usuario:', userData.value);
 
         try {
-
-            const response = await login(userData.value); 
+            const response = await login(userData.value);
             console.log('Respuesta del servidor:', response);
+            id.value = response.usuario.id_usuario;
 
-            validar.value = response.validar;
+            console.log( 'usuario id: ', id.value)
+            if (id.value) {
+                setTimeout(() => {
+                router.push(`/home/${id}`);
+            }, 2000);
 
-            const id = response.id;
-
-            if (validar.value) {
-                router.push(`/home/${id}`); 
-            }else{
+            } else {
                 alert('Los datos ingresados no son correctos');
-
             }
-
-        } catch (error) {
-            alert('Error al inicar sesión');
-            console.error('Error al enviar el formulario:', error);
-
-            
+        }catch (error) {
+            console.error('Error al iniciar sesión:', error);
+            alert('Error al iniciar sesión');
         }
-
-    }
-    
-
+    };
 </script>
+

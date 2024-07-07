@@ -14,6 +14,11 @@ import Publicacion from "./pages/publicacion/Publicacion.vue";
 import CrearEditar from "./pages/crear-editar/CrearEditar.vue";
 import Confirmacion from "./pages/registro/Confirmacion.vue";
 import RegistroEmpresa from "./pages/registro/RegistroEmpresa.vue";
+import OpenComission from "./pages/open-comission/OpenComission.vue";
+import Hojas from "./pages/open-comission/Hojas.vue";
+import Balance from "./pages/open-comission/Balance.vue";
+import Pedidos from "./pages/open-comission/Pedidos.vue";
+
 
 
 const router = createRouter({
@@ -147,6 +152,38 @@ const router = createRouter({
             component: CrearEditar,
             props: true
         },
+
+        {
+            path:"/open-comission/",
+            name:'open-comission',
+            component: OpenComission,
+            props: true,
+            children: [
+
+                {
+                    path:"hojas",
+                    name:'comisiones-hojas',
+                    component: Hojas
+                },
+
+                {
+                    path:"balance",
+                    name:'comisiones-balance',
+                    component: Balance
+
+                },
+                {
+                    path:"pedidos",
+                    name:'comisiones-pedidos',
+                    component: Pedidos
+
+                },
+            ]
+        },
+
+        
+
+
     ]
 
     

@@ -1,12 +1,11 @@
 <template>
-    <div class="flex flex-col">
+    <div class="flex flex-col gap-3">
 
             <div>
-                <Buscar class=""> </Buscar>
+                <Buscar :categorias="categorias" :subCategorias="subCategorias"> </Buscar>
             </div>
             
-            <div class=" flex">
-                <Filtro> </Filtro>
+            <div class="">
                 
                     <div v-if="currentRoute.path === '/catalogo/comisiones'" class="flex flex-wrap gap-2">
                         <ComisionCard></ComisionCard>
@@ -23,54 +22,102 @@
 
                     </div>
 
-                    <div v-if="currentRoute.path === '/catalogo/productos'" class="flex flex-wrap gap-2">
-                        <ProductoCard
-                        :portada="producto.portada"
-                        :titulo="producto.titulo"
-                        :descripcion_corta="producto.descripcion_corta"
-                        :precio="producto.precio"
-                        :nombre="usuario.nombre"
-                        :foto="usuario.foto"
-                      >   
-                      </ProductoCard>                     
+                    <div v-if="currentRoute.path === '/catalogo/productos'" class="flex  ">
+                        <ul class="flex flex-wrap gap-2">
+                            <li v-for="activo in activos" :key="activo.id" >
+                                <ProductoCard
+                                  :id="activo.id"
+                                  :publicacion_id="activo.publicacion_id"
+                                  :usuario_id="activo.usuario_id"
+                                  :portada="activo.portada"
+                                  :titulo="activo.titulo"
+                                  :descripcion_corta="activo.descripcion_corta"
+                                  :precio="activo.precio"
+                                  :nombre="activo.nombre"
+                                  :foto="activo.foto"
+                                />
+                              </li>
+                        </ul>
                     </div>
             </div>
     </div>
 </template>
-
+  
 <script setup>
-    import { onMounted, ref } from 'vue';
-    import { useRoute } from 'vue-router';
+  import { ref, onMounted } from 'vue';
+  import { useRoute } from 'vue-router';
 
-    import Filtro from '../../components/catalogos/Filtro.vue';
-    import Buscar from '../../components/catalogos/Buscar.vue';
-    import ComisionCard from '../../components/catalogos/ComisionCard.vue';
-    import EmpleoCard from '../../components/catalogos/EmpleoCard.vue';
-    import ProductoCard from '../../components/catalogos/ProductoCard.vue';
-    import PublicacionCard from '../../components/publicaciones/PublicacionCard.vue';
+  import { getAllActivos } from '../../services/ventas-compras-service.js';
+  import { getCategorias, getSubcategorias } from '../../services/publicaciones-service';
 
-    const route = useRoute();
-    const currentRoute = ref(route);
+  import ProductoCard from '../../components/catalogos/ProductoCard.vue';
+  import ComisionCard from '../../components/catalogos/ComisionCard.vue';
+  import PublicacionCard from '../../components/publicaciones/PublicacionCard.vue';
+  import EmpleoCard from '../../components/catalogos/EmpleoCard.vue';
+  import Buscar from '../../components/catalogos/Buscar.vue';  
 
-    const producto = ref({});
-    const usuario = ref({});
+  const route = useRoute();
+  const currentRoute = ref(route);
 
-    onMounted(async () => {
-  // Simulación de llamada a la API
-    producto.value = {
-        portada: '/banner.jpg',
-        titulo: 'Título del Producto',
-        descripcion_corta: 'Descripción del Producto',
-        precio: '50.00',
+  const categorias = ref([]);
+  const subCategorias = ref([]);
+
+  const activos = ref([]);
+  
+    const fetchAllActivos = async () => {
+        try {
+            const response = await getAllActivos();
+            activos.value = response.map(activo => ({
+                id: activo.id || '',
+                precio: activo.precio || '',
+                publicacion_id: activo.publicacion?.id || '',
+                portada: activo.publicacion?.portada || '',
+                titulo: activo.publicacion?.titulo || '',
+                descripcion_corta: activo.publicacion?.descripcion_corta || '',
+                
+                usuario_id: activo.publicacion?.usuario?.id || '',
+                nombre: activo.publicacion?.usuario?.nombre || '',
+                foto: activo.publicacion?.usuario?.foto || ''
+            }));
+            console.log('response:: ', response);
+
+            console.log('activos: ' , activos.value);
+
+        } catch (error) {
+            console.error('Error al obtener los activos:', error);
+        }
     };
+    
+  const recibirCategorias = async () => {
+        try {
+            const response = await getCategorias();
+            categorias.value = response.categorias;
+            console.log('Categorías:', categorias.value , response);
+        } catch (error) {
+            console.error('Error al obtener categorias:', error);
+        }
+    }
 
-    usuario.value = {
-        nombre: 'Nombre del Usuario',
-        foto: '/logo.png',
-    };
-    });
-    onMounted(() => {
-    console.log(currentRoute.value);
-    });
-</script>
+    const recibirSubcategorias = async () => {
+        try {
+            const response = await getSubcategorias();
+            subCategorias.value = response.subCategorias;
+            console.log('Subcategorías:', subCategorias.value, response);
+        } catch (error) {
+            console.error('Error al obtener subCategorias:', error);
+        }
+    }
 
+  
+  onMounted(async () => {
+    try {
+        await recibirCategorias();
+        await recibirSubcategorias();
+    } catch (error) {
+      console.error('Error al cargar categorías y subcategorías:', error);
+    }
+
+    fetchAllActivos();
+});
+  </script>
+  

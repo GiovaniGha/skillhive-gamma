@@ -27,4 +27,27 @@
 
 <script setup>
 
+    const props = defineProps({
+
+        id: {
+            type: String,
+            required: true
+        },
+
+        nombre: {
+            type: String,
+            required: true
+        },
+
+        ocupacion: {
+            type: String,
+            required: true
+        },
+
+        portada: {
+            type: String,
+            required: true
+        }
+    }); 
+    
 </script>

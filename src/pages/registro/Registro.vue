@@ -20,25 +20,32 @@
                         </label>
                     </article>
 
-                    <article class="flex flex-col gap-1 m-1 mb-3"><!--Nombre-->
+                    <article class="flex flex-col gap-1 m-1 mb-3"> <!--Nombre-->
                         <small>Nombre</small>
                         <label class="input input-bordered input-primary input-sm bg-primary/10 flex items-center gap-2">
                             <input type="text" v-model="userData.nombre" class="text-xs grow " placeholder="Ej: Juan" />
                         </label>
-                    </article>
+                    </article> 
     
-                    <article class="flex flex-col gap-1 m-1 mb-3"><!--apellido-->
+                    <article class="flex flex-col gap-1 m-1 mb-3"><!--Apellido-->
                         <small>Apellido</small>
                         <label class="input input-bordered input-primary input-sm bg-primary/10 flex items-center gap-2">
                             <input type="text" v-model="userData.apellido" class="text-xs grow " placeholder="Ej: Sánchez" />
                         </label>
                     </article>
 
+                    <article class="flex flex-col gap-1 m-1 mb-3"><!--fecha nacimiento-->
+                        <small>Fecha de nacimiento</small>
+                        <label class="input input-bordered input-primary input-sm bg-primary/10 flex items-center gap-2">
+                            <input type="date" v-model="userData.fecha_nacimiento" class="text-xs grow " />
+                        </label>
+                    </article>
 
 
+                    <!--cheeeeck-->
                     <label for="" class="flex gap-2 "> 
                         <input type="checkbox" v-model="check" name="" id="" class="checkbox checkbox-xs checkbox-primary">
-                        <small class="text-xs">Estoy de acuerdo con las <RouterLink to="/privacidad" class="link "> politicas de privacidad</RouterLink> </small>
+                        <small class="text-xs">Estoy de acuerdo con las <RouterLink to="/" class="link "> politicas de privacidad</RouterLink> </small>
                     </label>
                 </div>
     
@@ -65,6 +72,22 @@
                             <input type="password" v-model="userData.password" class="text-xs grow " placeholder="************" />
                         </label>
                     </article>
+                    
+                    <article class="flex flex-col gap-1 m-1 mb-3">
+                        <small>Cédula</small>
+                        <label class="input input-bordered input-primary input-sm bg-primary/10 flex items-center gap-2">
+                            <svg  xmlns="http://www.w3.org/2000/svg"  width="18"  height="18"  viewBox="0 0 24 24"  fill="currentColor"  class="icon icon-tabler icons-tabler-filled icon-tabler-user text-gray-300"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 2a5 5 0 1 1 -5 5l.005 -.217a5 5 0 0 1 4.995 -4.783z" /><path d="M14 14a5 5 0 0 1 5 5v1a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-1a5 5 0 0 1 5 -5h4z" /></svg>                            
+                            <input type="text" v-model="userData.cedula" class="text-xs grow " placeholder="9-999-999" />
+                        </label>
+                    </article>
+
+                    <article class="flex flex-col gap-1 m-1 mb-3">
+                        <small>Telefono</small>
+                        <label class="input input-bordered input-primary input-sm bg-primary/10 flex items-center gap-2">
+                            <svg  xmlns="http://www.w3.org/2000/svg"  width="18"  height="18"  viewBox="0 0 24 24"  fill="currentColor"  class="icon icon-tabler icons-tabler-filled icon-tabler-user text-gray-300"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 2a5 5 0 1 1 -5 5l.005 -.217a5 5 0 0 1 4.995 -4.783z" /><path d="M14 14a5 5 0 0 1 5 5v1a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-1a5 5 0 0 1 5 -5h4z" /></svg>                            
+                            <input type="tel" v-model="userData.telefono" class="text-xs grow " placeholder="50760000000" />
+                        </label>
+                    </article>
 
                 </div>
             </section>
@@ -76,13 +99,28 @@
                     <RouterLink to="empresa">Cambiar tipo de cuenta</RouterLink>
                 </button> -->
 
-                <button type="submit" class="btn btn-sm btn-primary text-xs  font-medium">
-                    Registrarse
-                    <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-arrow-right"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l14 0" /><path d="M13 18l6 -6" /><path d="M13 6l6 6" /></svg>
-                </button>            
+                        <button type="submit" v-if="check"  v-bind="btnSubmit" class="btn btn-sm btn-primary text-xs  font-medium">
+                            Registrarse
+                            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-arrow-right"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l14 0" /><path d="M13 18l6 -6" /><path d="M13 6l6 6" /></svg>
+                        </button> 
+
+                        <button v-else v-bind="btnSubmit" @click="showAlert" class="btn btn-sm btn-disabled text-xs font-medium">
+                            Registrarse
+                        </button>                
             </section>
 
+            <div v-if="load">
+                <span class="loading loading-dots loading-lg"></span>
 
+            </div>
+
+            <div v-if="msj.length > 0">
+                <ul>
+                  <li v-for="(error, index) in msj" :key="index">
+                    {{ error.msg }};
+                  </li>
+                </ul>
+              </div>
             
             <!--Botones git y google-->
             <section class="flex gap-4 mt-2">
@@ -105,7 +143,6 @@
             <div class="flex flex-col gap-4">    
                 <h2 class="text-8xl font-bold tracking-wider "> Skill</h2>
                 <h2 class="text-8xl font-bold tracking-wider "> Hive</h2>
-
             </div>
         </section>
 
@@ -115,34 +152,55 @@
 <script setup>
     import { ref } from 'vue';
     import { RouterLink, useRouter } from 'vue-router';
-    import { login } from '../../services/auth-service';
+    import { registroFreelancer } from '../../services/auth-service';
     
     const router = useRouter(); 
-
+    const check = ref(false);
+    const btnSubmit = ref({});
+    const msj = ref([]);
+    const load = ref(false);
     const userData = ref({
         correo: '',
+        password: '',
         nombre: '',
-        apellido: '', 
-        password: '' 
+        apellido: '',
+        cedula: '',
+        telefono: '',
+        fecha_nacimiento:''
     });
+
+    const validar = ref(false)
 
     const enviarDatos = async () => {
         console.log(userData.value); 
 
         try {
-            const response = await login(userData.value);
+            const response = await registroFreelancer(userData.value);
             console.log('Respuesta del servidor:', response);
+
+            validar.value = response.validar;
+
+            if (validar.value) {
+                load.value = true;
+                alert('registro exitoso, redirigiendo');
             setTimeout(() => {
-                router.push('/confirmacion');
-                
-            }), 1000
+                router.push(`/registro/confirmacion`);
+            }, 2000);
 
+            } else {
+                msj.value = response.errores || [{ msg: 'Error desconocido' }];
+            }
+        
         } catch (error) {
-
             console.error('Error al enviar el formulario:', error);
+            msj.value = [{ msg: 'Error al registrar el freelancer. Inténtalo de nuevo más tarde.' }];
 
         }
-    }
+    };
+
+    const showAlert = () => {
+        alert('Acepte nuestras políticas de privacidad');
+    };
 
 
 </script>
