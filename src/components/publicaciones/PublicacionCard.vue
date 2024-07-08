@@ -1,7 +1,7 @@
 
 
 <template>
-    <div class="relative group h-56 w-56 transition-opacity overflow-hidden">
+    <div @click="irActivo" class="relative group h-56 w-56 transition-opacity overflow-hidden">
         <img :src="portada" alt="Shoes" class="object-cover w-full h-full">
     
         <div class="absolute transition-opacity inset-0 bg-black group-hover:bg-opacity-50 bg-opacity-0 group-hover:shadow-[inset_0_2px_8px_rgba(0,0,0,0.6)] pointer-events-none"></div>
@@ -49,5 +49,9 @@
             required: true
         }
     }); 
+
+    const irActivo = () => {
+        alert('jahsha');
+    }
     
 </script>

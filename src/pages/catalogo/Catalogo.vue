@@ -11,6 +11,7 @@
                         <ul class="flex flex-wrap gap-2">
                             <li v-for="comision in comisiones" :key="comision.id" >
                                 <ComisionCard
+                                    :id="comision.id"
                                     :titulo="comision.titulo"
                                     :descripcion="comision.descripcion"
                                     :precio="comision.precio"
@@ -101,10 +102,10 @@
         try {
             const response = await getAllComisiones();
             comisiones.value = response.comisiones.map(comision => ({
-
-                titulo: comision.titulo || 'ana',
-                descripcion: comision.descripcion || 'prueba 2',
-                precio: comision.precio || '6.99',
+                id: comision.id || '',
+                titulo: comision.titulo || '',
+                descripcion: comision.descripcion || '',
+                precio: comision.precio || '',
                 imagen: comision.imagen || '',
                
             }));

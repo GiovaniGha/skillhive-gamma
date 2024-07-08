@@ -1,7 +1,7 @@
 <template>
-    <div class=" h-fit">
+    <div @click="irActivo" class="h-fit cursor-pointer w-80">
       <div class="card h-fit card-side bg-base-400 shadow-xl">
-        <figure class="h-48"><img :src="portada" class="" :alt="titulo"/></figure>
+        <figure class="h-40 bg-slate-200 w-3"><img :src="portada"  :alt="titulo"/></figure>
         <div class="card-body p-0 px-4 pt-2 flex flex-col gap-1 justify-center w-80">
           <h2 class="card-title text-sm">{{ titulo }}</h2>
           <section class="flex gap-2 items-center">
@@ -45,8 +45,13 @@
   
   <script setup>
   import { defineProps } from 'vue';
+  import { useRouter } from 'vue-router';
+
   
+  const router = useRouter();
+
   const props = defineProps({
+  
     id: {
       type: [String, Number],
       required: true
@@ -88,6 +93,12 @@
   const agregarCarrito = () => {
     alert('Producto añadido al carrito');
   };
+
+  const irActivo = () => {
+        alert('jahsha');
+        router.push(`/publicacion/props.id/activo`);
+
+    }
   </script>
   
   

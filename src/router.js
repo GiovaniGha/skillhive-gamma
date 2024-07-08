@@ -141,7 +141,7 @@ const router = createRouter({
         },
 
         {
-            path:"/publicacion/:id/tipo",
+            path:"/publicacion/:id/:tipo",
             name: 'publicacion',
             component: Publicacion,
             props: true 

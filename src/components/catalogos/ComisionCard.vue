@@ -20,22 +20,22 @@
     const props = defineProps({
 
         titulo: {
-            type: String,
+            type: [String, Number],
             required: true
         },
 
         descripcion: {
-            type: String,
+            type: [String],
             required: true
         },
 
         precio: {
-            type: Number,
+            type: [String, Number],
             required: true
         },
 
         imagen: {
-            type: String,
+            type: [String],
             required: true
         },
     });

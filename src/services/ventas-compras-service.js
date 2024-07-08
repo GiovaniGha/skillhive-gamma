@@ -56,7 +56,7 @@ export const getAllActivos = async () => {
   
   export const getActivoById = async (id) => {
     try {
-      const response = await axios.get(API_BASE_URL + endpoints_ventas_compras.getActivoById(id), {
+      const response = await axios.get(`${API_BASE_URL + endpoints_ventas_compras.getActivoById(id)}?fecha_orden=ASC`, {
         validateStatus: function (status) {
             return status < 500;
         }
@@ -128,7 +128,7 @@ export const getAllActivos = async () => {
   //comisiones
 export const getAllComisiones = async () => {
   try {
-    const response = await axios.get(`${API_BASE_URL + endpoints_ventas_compras.getAllActivos()}?fecha_orden=ASC`, {
+    const response = await axios.get(`${API_BASE_URL + endpoints_ventas_compras.getAllComisiones()}?fecha_orden=ASC`, {
       validateStatus: function (status) {
         return status < 500;
       }
