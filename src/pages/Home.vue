@@ -12,17 +12,17 @@
 
             <div class="flex flex-wrap overflow-y-hidden" style="max-height: calc(2 * 14rem + 1rem);">
                 <ul class="flex flex-wrap gap-2 overflow-y-hidden">
-                    <li v-for="activo in activos" :key="activo.id" >
+                    <li v-for="publicacion in publicaciones" :key="publicacion.id" >
                         <PublicacionCard
-                          :id="activo.id"
-                          :publicacion_id="activo.publicacion_id"
-                          :usuario_id="activo.usuario_id"
-                          :portada="activo.portada"
-                          :titulo="activo.titulo"
-                          :descripcion_corta="activo.descripcion_corta"
-                          :precio="activo.precio"
-                          :nombre="activo.nombre"
-                          :foto="activo.foto"
+                          :id="publicacion.id"
+                          :publicacion_id="publicacion.publicacion_id"
+                          :usuario_id="publicacion.usuario_id"
+                          :portada="publicacion.portada"
+                          :titulo="publicacion.titulo"
+                          :descripcion_corta="publicacion.descripcion_corta"
+                          :precio="publicacion.precio"
+                          :nombre="publicacion.nombre"
+                          :foto="publicacion.foto"
                         />
                       </li>
                 </ul>
@@ -62,18 +62,18 @@
             </div>
 
             <div class="flex flex-wrap  ">
-                <ul class="flex flex-wrap gap-2">
-                    <li v-for="activo in activos" :key="activo.id" >
+                <ul class="flex flex-wrap gap-2 overflow-y-hidden">
+                    <li v-for="publicacion in publicaciones" :key="publicacion.id" >
                         <PublicacionCard
-                          :id="activo.id"
-                          :publicacion_id="activo.publicacion_id"
-                          :usuario_id="activo.usuario_id"
-                          :portada="activo.portada"
-                          :titulo="activo.titulo"
-                          :descripcion_corta="activo.descripcion_corta"
-                          :precio="activo.precio"
-                          :nombre="activo.nombre"
-                          :foto="activo.foto"
+                          :id="publicacion.id"
+                          :publicacion_id="publicacion.publicacion_id"
+                          :usuario_id="publicacion.usuario_id"
+                          :portada="publicacion.portada"
+                          :titulo="publicacion.titulo"
+                          :descripcion_corta="publicacion.descripcion_corta"
+                          :precio="publicacion.precio"
+                          :nombre="publicacion.nombre"
+                          :foto="publicacion.foto"
                         />
                       </li>
                 </ul>
@@ -93,38 +93,39 @@
     import { getAllActivos } from '../services/ventas-compras-service';
     
     
-    const publicacion = ref([]);
+    const publicaciones = ref([]);
     const activos = ref([]);
 
 
-    const fetchPublicaciones = async   () => {
-        try {
-            const response = await getAllPublicaciones();
-            publicacion.value = response.map(activo => ({
+    const fetchPublicaciones = async () => {
+    try {
+        const response = await getAllPublicaciones();
+        
+        // Verificar si 'publicaciones' existe en la respuesta
+        if (response && Array.isArray(response.publicaciones)) {
+            // Mapear las publicaciones si existe la propiedad 'publicaciones'
+            publicaciones.value = response.publicaciones.map(publicacion => ({
                 id: publicacion.id || '',
                 portada: publicacion?.portada || '',
                 titulo: publicacion?.titulo || '',
-                
                 usuario_id: publicacion?.usuario?.id || '',
                 nombre: publicacion?.usuario?.nombre || '',
                 foto: publicacion?.usuario?.foto || '',
                 ocupacion: publicacion?.usuario?.ocupacion || '',
-
-
             }));
-            console.log('response publicaciones: ', response);
-
-            console.log('activos: ' , publicacion.value);
-
-        } catch (error) {
-            console.error('Error al obtener las publicaciones:', error);
+            
+            console.log('Publicaciones:', publicacion.value);
+        } else {
+            console.error('El objeto de respuesta no contiene una propiedad válida de publicaciones:', response);
         }
-    };
-
+    } catch (error) {
+        console.error('Error al obtener las publicaciones:', error);
+    }
+};
     const fetchAllActivos = async () => {
         try {
             const response = await getAllActivos();
-            activos.value = response.map(activo => ({
+            activos.value = response.activos.map(activo => ({
                 id: activo.id || '',
                 precio: activo.precio || '',
                 publicacion_id: activo.publicacion?.id || '',
@@ -136,7 +137,7 @@
                 nombre: activo.publicacion?.usuario?.nombre || '',
                 foto: activo.publicacion?.usuario?.foto || ''
             }));
-            console.log('response: ', response);
+            console.log('response de activos: ', response);
 
         } catch (error) {
             console.error('Error al obtener los activos:', error);

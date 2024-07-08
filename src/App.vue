@@ -1,7 +1,7 @@
 <template>
     <div class="flex flex-col min-h-screen">
         <Navbar />
-        <div class="flex flex-1 mt-[66px] ml-[3.5rem]">
+        <div  class="flex flex-1 mt-[66px] ml-[3.5rem]">
             <Sidebar />
             <main class="flex-1 p-4">
                 <!-- Contenido principal -->
@@ -20,9 +20,9 @@
     import PublicacionModal from './components/publicaciones/PublicacionModal.vue';
     import { RouterView, useRouter } from 'vue-router'; 
 
+    import { verificarSesionActiva } from './services/auth-service';
 
-
-
+    verificarSesionActiva();
 
 
 </script>

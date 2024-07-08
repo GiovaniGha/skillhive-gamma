@@ -45,7 +45,7 @@
                     <!--cheeeeck-->
                     <label for="" class="flex gap-2 "> 
                         <input type="checkbox" v-model="check" name="" id="" class="checkbox checkbox-xs checkbox-primary">
-                        <small class="text-xs">Estoy de acuerdo con las <RouterLink to="/" class="link "> politicas de privacidad</RouterLink> </small>
+                        <small class="text-xs">Estoy de acuerdo con las <RouterLink to="/politicas" class="link "> politicas de privacidad</RouterLink> </small>
                     </label>
                 </div>
     
@@ -173,15 +173,18 @@
 
     const enviarDatos = async () => {
         console.log(userData.value); 
+                load.value = true;
 
         try {
             const response = await registroFreelancer(userData.value);
             console.log('Respuesta del servidor:', response);
 
             validar.value = response.validar;
+            console.log('Respuesta del validar:', validar);
+            console.log('Respuesta del value:', validar.value);
 
-            if (validar.value) {
-                load.value = true;
+
+            if (validar) {
                 alert('registro exitoso, redirigiendo');
             setTimeout(() => {
                 router.push(`/registro/confirmacion`);

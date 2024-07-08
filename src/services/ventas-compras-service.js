@@ -1,4 +1,5 @@
-import { API_BASE_URL, axios } from "./config";
+import axios from "axios";
+import { API_BASE_URL } from "./config";
 
 export const endpoints_ventas_compras = {
 
@@ -13,6 +14,18 @@ export const endpoints_ventas_compras = {
     putActivoById: (id) => `/ventas-compras-activos/activos/${id}`,
     putActivosRevision: (id) => `/ventas-compras-activos/publicaciones/${id}/subcategorias`,
 
+    //comisiones
+    getAllComisiones: () => `/ventas-compras-activos/comisiones`,
+    getComisionById: (id) => `/ventas-compras-activos/comisiones/${id}`,
+    postComision: () => `/ventas-compras-activos/comisiones`,
+    putComisionById: (id) => `/ventas-compras-activos/comisiones/${id}`,
+    getComisionesRecibidas: () => `/ventas-compras-activos/comisiones/solicitudes/recibidas`,
+    getComisionesRecibidasById: (id) => `/ventas-compras-activos/comisiones/solicitudes/recibidas/${id}`,
+    putComisionRecibidaAceptar: (id, action) => `/ventas-compras-activos/comisiones/solicitudes/recibidas/${id}/${action}`,
+    putComisionRecibidaCancelar: (id) => `/ventas-compras-activos/comisiones/cancelar/${id}`,
+    postComisionRecibida: (id) => `/ventas-compras-activos/comisiones/entregar/${id}`,
+
+
     //carrito de compras
     getCarrito: () => `/ventas-compras-activos/carrito`,
     getActivoCarrito: (id) => `/ventas-compras-activos/carrito/${id}`,
@@ -22,7 +35,7 @@ export const endpoints_ventas_compras = {
 //activos
 export const getAllActivos = async () => {
     try {
-      const response = await axios.get(API_BASE_URL + endpoints_ventas_compras.getAllActivos(), {
+      const response = await axios.get(`${API_BASE_URL + endpoints_ventas_compras.getAllActivos()}?fecha_orden=ASC`, {
         validateStatus: function (status) {
             return status < 500;
         }
@@ -111,6 +124,179 @@ export const getAllActivos = async () => {
     }
   };
   
+
+  //comisiones
+export const getAllComisiones = async () => {
+  try {
+    const response = await axios.get(`${API_BASE_URL + endpoints_ventas_compras.getAllActivos()}?fecha_orden=ASC`, {
+      validateStatus: function (status) {
+        return status < 500;
+      }
+    });
+
+    if (response.status === 400) {
+      console.error('Datos de comisiones incorrectos:', response.data);
+      throw new Error('Datos de comisiones incorrectos');
+    }
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching comisiones:', error);
+    throw error;
+  }
+};
+
+export const getComisionById = async (id) => {
+  try {
+    const response = await axios.get(API_BASE_URL + endpoints_ventas_compras.getComisionById(id), {
+      validateStatus: function (status) {
+        return status < 500;
+      }
+    });
+
+    if (response.status === 400) {
+      console.error('Datos de comision incorrectos:', response.data);
+      throw new Error('Datos de comision incorrectos');
+    }
+    return response.data;
+  } catch (error) {
+    console.error(`Error fetching comision by ID ${id}:`, error);
+    throw error;
+  }
+};
+
+export const postComision = async (comisionData) => {
+  try {
+    const response = await axios.post(API_BASE_URL + endpoints_ventas_compras.postComision(), comisionData, {
+      validateStatus: function (status) {
+        return status < 500;
+      }
+    });
+
+    if (response.status === 400) {
+      console.error('Datos de comision incorrectos:', response.data);
+      throw new Error('Datos de comision incorrectos');
+    }
+    return response.data;
+  } catch (error) {
+    console.error('Error creating comision:', error);
+    throw error;
+  }
+};
+
+export const putComisionById = async (id, comisionData) => {
+  try {
+    const response = await axios.put(API_BASE_URL + endpoints_ventas_compras.putComisionById(id), comisionData, {
+      validateStatus: function (status) {
+        return status < 500;
+      }
+    });
+
+    if (response.status === 400) {
+      console.error('Datos de comision incorrectos:', response.data);
+      throw new Error('Datos de comision incorrectos');
+    }
+    return response.data;
+  } catch (error) {
+    console.error(`Error updating comision by ID ${id}:`, error);
+    throw error;
+  }
+};
+
+export const getComisionesRecibidas = async () => {
+  try {
+    const response = await axios.get(API_BASE_URL + endpoints_ventas_compras.getComisionesRecibidas(), {
+      validateStatus: function (status) {
+        return status < 500;
+      }
+    });
+
+    if (response.status === 400) {
+      console.error('Datos de comisiones recibidas incorrectos:', response.data);
+      throw new Error('Datos de comisiones recibidas incorrectos');
+    }
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching comisiones recibidas:', error);
+    throw error;
+  }
+};
+
+export const getComisionesRecibidasById = async (id) => {
+  try {
+    const response = await axios.get(API_BASE_URL + endpoints_ventas_compras.getComisionesRecibidasById(id), {
+      validateStatus: function (status) {
+        return status < 500;
+      }
+    });
+
+    if (response.status === 400) {
+      console.error(`Datos de comision recibida incorrectos para ID ${id}:`, response.data);
+      throw new Error('Datos de comision recibida incorrectos');
+    }
+    return response.data;
+  } catch (error) {
+    console.error(`Error fetching comision recibida by ID ${id}:`, error);
+    throw error;
+  }
+};
+
+export const putComisionRecibidaAceptar = async (id, action) => {
+  try {
+    const response = await axios.put(API_BASE_URL + endpoints_ventas_compras.putComisionRecibidaAceptar(id, action), {}, {
+      validateStatus: function (status) {
+        return status < 500;
+      }
+    });
+
+    if (response.status === 400) {
+      console.error('Datos de comision recibida aceptar incorrectos:', response.data);
+      throw new Error('Datos de comision recibida aceptar incorrectos');
+    }
+    return response.data;
+  } catch (error) {
+    console.error(`Error accepting comision recibida by ID ${id}:`, error);
+    throw error;
+  }
+};
+
+export const putComisionRecibidaCancelar = async (id) => {
+  try {
+    const response = await axios.put(API_BASE_URL + endpoints_ventas_compras.putComisionRecibidaCancelar(id), {}, {
+      validateStatus: function (status) {
+        return status < 500;
+      }
+    });
+
+    if (response.status === 400) {
+      console.error('Datos de comision recibida cancelar incorrectos:', response.data);
+      throw new Error('Datos de comision recibida cancelar incorrectos');
+    }
+    return response.data;
+  } catch (error) {
+    console.error(`Error canceling comision recibida by ID ${id}:`, error);
+    throw error;
+  }
+};
+
+export const postComisionRecibida = async (id) => {
+  try {
+    const response = await axios.post(API_BASE_URL + endpoints_ventas_compras.postComisionRecibida(id), {}, {
+      validateStatus: function (status) {
+        return status < 500;
+      }
+    });
+
+    if (response.status === 400) {
+      console.error('Datos de comision recibida incorrectos:', response.data);
+      throw new Error('Datos de comision recibida incorrectos');
+    }
+    return response.data;
+  } catch (error) {
+    console.error(`Error posting comision recibida by ID ${id}:`, error);
+    throw error;
+  }
+};
+
 
   //carrito de compras :P
   export const getCarrito = async () => {
