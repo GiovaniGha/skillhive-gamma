@@ -19,6 +19,12 @@ export const endpoints_ventas_compras = {
     deleteActivoCarrito: (id) => `/ventas-compras-activos/carrito/${id}`,
 
     mandarRevision: (id, action) => `/ventas-compras-activos/activos/${id}/a-revision/${action}`,
+
+    // pagos
+    pagarActivoCrearOrden: (id) => `/ventas-compras-activos/pagar/crear-orden/activo/${id}`,
+    pagarActivoAprobarOrden: (id, orden) => `/ventas-compras-activos/pagar/aprobar-orden/activo/${id}/${orden}`,
+    pagarCarritoCrearOrden: () => `/ventas-compras-activos/pagar/crear-orden/carrito`,
+    pagarCarritoAprobarOrden: (orden) => `/ventas-compras-activos/pagar/pagar-orden/carrito/${orden}`,
 };
 
 //activos
@@ -179,6 +185,62 @@ export const mandarRevision = async (id, action) => {
         return response.data;
     } catch (error) {
         console.error(`Error mandando activo ${id} a revision:`, error);
+        throw error;
+    }
+};
+
+export const pagarActivoCrearOrden = async (id) => {
+    try {
+        const response = await axios.post(API_BASE_URL + endpoints_ventas_compras.pagarActivoCrearOrden(id), {}, {
+            headers: {
+              'x-token': localStorage.getItem('token') || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzIwNDA1OTM0LCJleHAiOjE3MjA0OTIzMzR9.Dp4FqZNPbJ77RJLUsJInpmhoUpA9IaXj-aarNMRBhes'
+            }
+        });
+        return response.data;
+    } catch (error) {
+        console.error(`Error pagando activo ${id} crear orden:`, error);
+        throw error;
+    }
+};
+
+export const pagarActivoAprobarOrden = async (id, orden) => {
+    try {
+        const response = await axios.post(API_BASE_URL + endpoints_ventas_compras.pagarActivoAprobarOrden(id, orden), {}, {
+            headers: {
+              'x-token': localStorage.getItem('token') || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzIwNDA1OTM0LCJleHAiOjE3MjA0OTIzMzR9.Dp4FqZNPbJ77RJLUsJInpmhoUpA9IaXj-aarNMRBhes'
+            }
+        });
+        return response.data;
+    } catch (error) {
+        console.error(`Error pagando activo ${id} aprobar orden:`, error);
+        throw error;
+    }
+};
+
+export const pagarCarritoCrearOrden = async () => {
+    try {
+        const response = await axios.post(API_BASE_URL + endpoints_ventas_compras.pagarCarritoCrearOrden(), {}, {
+            headers: {
+              'x-token': localStorage.getItem('token') || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzIwNDA1OTM0LCJleHAiOjE3MjA0OTIzMzR9.Dp4FqZNPbJ77RJLUsJInpmhoUpA9IaXj-aarNMRBhes'
+            }
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Error pagando carrito crear orden:', error);
+        throw error;
+    }
+};
+
+export const pagarCarritoAprobarOrden = async (orden) => {
+    try {
+        const response = await axios.post(API_BASE_URL + endpoints_ventas_compras.pagarCarritoAprobarOrden(orden), {}, {
+            headers: {
+              'x-token': localStorage.getItem('token') || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzIwNDA1OTM0LCJleHAiOjE3MjA0OTIzMzR9.Dp4FqZNPbJ77RJLUsJInpmhoUpA9IaXj-aarNMRBhes'
+            }
+        });
+        return response.data;
+    } catch (error) {
+        console.error(`Error pagando carrito aprobar orden ${orden}:`, error);
         throw error;
     }
 };

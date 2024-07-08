@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@paypal/paypal-js": "^8.1.0",
     "@tabler/icons-vue": "^3.5.0",
     "axios": "^1.7.2",
     "vue": "^3.4.21",
