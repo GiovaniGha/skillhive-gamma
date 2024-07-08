@@ -54,7 +54,7 @@
 
                 <!-- precio -->
                 <div>
-                    <input type="number" class="input w-full input-bordered" id="precio" name="precio" placeholder="Precio" v-model="activoData.precio">
+                    <input type="text"  class="input w-full input-bordered" id="precio" name="precio" placeholder="Precio" v-model="activoData.precio" />
                 </div>
 
                 <!-- Categoria - solo creacion -->
@@ -195,14 +195,19 @@ const submit = async () => {
         formData.append('titulo', activoData.value.titulo);
         formData.append('descripcion_corta', activoData.value.descripcion_corta);
         formData.append('precio', activoData.value.precio);
-        formData.append('portada', portada.value.files[0]);
+        if(portada.value.files[0] !== undefined) {
+            console.log('agregue portada');
+            formData.append('portada', portada.value.files[0]);
+        }
 
         const recursosFiles = recursos.value.files;
         for (let i = 0; i < recursosFiles.length; i++) {
             formData.append('recursos', recursosFiles[i]);
         }
 
-        formData.append('recursosElimiarIds', Object.values(recursosEliminarIds.value));
+        if(recursosEliminarIds.value.length > 0) {
+            formData.append('recursosElimiarIds', Object.values(recursosEliminarIds.value));
+        }
 
         try {
             const data = await putActivoById(props.edicion_id, formData);

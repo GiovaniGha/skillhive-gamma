@@ -25,6 +25,11 @@ export const endpoints_ventas_compras = {
     pagarActivoAprobarOrden: (id, orden) => `/ventas-compras-activos/pagar/aprobar-orden/activo/${id}/${orden}`,
     pagarCarritoCrearOrden: () => `/ventas-compras-activos/pagar/crear-orden/carrito`,
     pagarCarritoAprobarOrden: (orden) => `/ventas-compras-activos/pagar/pagar-orden/carrito/${orden}`,
+
+    // Carrito
+    obtenerCarrito: () => `/ventas-compras-activos/carrito`,
+    agregarAlCarrito: (id) => `/ventas-compras-activos/carrito/${id}`,
+    eliminarDelCarrito: (id) => `/ventas-compras-activos/carrito/${id}`,
 };
 
 //activos
@@ -98,7 +103,7 @@ export const getActivoPropio = async (id) => {
       const response = await axios.post(API_BASE_URL + endpoints_ventas_compras.postActivo(), activoData, {
         headers: {
           'Content-Type': 'multipart/form-data',
-          'x-token': localStorage.getItem('token') || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzIwNDA1OTM0LCJleHAiOjE3MjA0OTIzMzR9.Dp4FqZNPbJ77RJLUsJInpmhoUpA9IaXj-aarNMRBhes',
+          'x-token': localStorage.getItem('token'),
         },
       });
       return response.data;
@@ -241,6 +246,48 @@ export const pagarCarritoAprobarOrden = async (orden) => {
         return response.data;
     } catch (error) {
         console.error(`Error pagando carrito aprobar orden ${orden}:`, error);
+        throw error;
+    }
+};
+
+export const obtenerCarrito = async () => {
+    try {
+        const response = await axios.get(API_BASE_URL + endpoints_ventas_compras.obtenerCarrito(), {
+          headers: {
+            'x-token': localStorage.getItem('token') || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzIwNDQ2MjAzLCJleHAiOjE3MjA1MzI2MDN9.jvVoiAEAPLsUYF0_SqEFhwvVcn_ZeRcF4LjRouucmTU'
+          }
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching carrito:', error);
+        throw error;
+    }
+};
+
+export const agregarAlCarrito = async (id) => {
+    try {
+        const response = await axios.post(API_BASE_URL + endpoints_ventas_compras.agregarAlCarrito(id), {}, {
+            headers: {
+              'x-token': localStorage.getItem('token') || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzIwNDA1OTM0LCJleHAiOjE3MjA0OTIzMzR9.Dp4FqZNPbJ77RJLUsJInpmhoUpA9IaXj-aarNMRBhes'
+            }
+        });
+        return response.data;
+    } catch (error) {
+        console.error(`Error adding activo ${id} to carrito:`, error);
+        throw error;
+    }
+};
+
+export const eliminarDelCarrito = async (id) => {
+    try {
+        const response = await axios.delete(API_BASE_URL + endpoints_ventas_compras.eliminarDelCarrito(id), {
+            headers: {
+              'x-token': localStorage.getItem('token') || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzIwNDA1OTM0LCJleHAiOjE3MjA0OTIzMzR9.Dp4FqZNPbJ77RJLUsJInpmhoUpA9IaXj-aarNMRBhes'
+            }
+        });
+        return response.data;
+    } catch (error) {
+        console.error(`Error deleting activo ${id} from carrito:`, error);
         throw error;
     }
 };
