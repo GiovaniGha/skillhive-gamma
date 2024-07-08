@@ -1,5 +1,5 @@
 <template>
-     <div class="bg-base-100 w-14 h-[calc(100vh-66px)] fixed top-[66px] z-10 left-0">
+    <div  class="bg-base-100 w-14 h-[calc(100vh-66px)] fixed top-[66px] z-10 left-0">
         <ul class="flex flex-col gap-8 mt-6">
             <li v-for="(ruta, index) in rutas" :key="index" :title="ruta.titulo" class="flex justify-center">
                 <div v-if="ruta.titulo !== 'Agregar'">
@@ -33,6 +33,7 @@
 import { ref } from 'vue';
 import { IconHomeFilled, IconShoppingCartFilled, IconCirclePlusFilled, IconMessage, IconCashBanknoteFilled, IconChartPieFilled } from '@tabler/icons-vue';
 import { RouterLink } from 'vue-router';
+import { sesionActiva } from '../services/auth-service';
 
 const rutas = ref([
     {titulo: 'Inicio', url: '/', icono: IconHomeFilled},

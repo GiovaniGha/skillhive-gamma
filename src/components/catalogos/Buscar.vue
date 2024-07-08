@@ -10,7 +10,7 @@
         </select>
 
         <!-- Dropdown de Subcategorías -->
-        <select v-model="selectedSubcategoria" class="select select-bordered select-sm w-full max-w-xs">
+        <select v-model="selectedSubcategoria" class="select select-bordered select-sm w-full max-w-xs" :disabled="!selectedCategoria">
             <option disabled value="">Subcategorías</option>
             <option v-for="subcategoria in props.subCategorias" :key="subcategoria.id" :value="subcategoria.id">{{ subcategoria.nombre }}</option>
         </select>
@@ -38,10 +38,29 @@
   </template>
   
 <script setup>
-  import { ref } from 'vue';
+  import { ref, computed, watch } from 'vue';
 
-    const props = defineProps(['categorias', 'subCategorias']);
-    const selectedCategoria = ref('');
-    const selectedSubcategoria = ref('');
-    const searchQuery = ref('');
+  const props = defineProps({
+  categorias: {
+    type: Array,
+    required: true
+  },
+  subCategorias: {
+    type: Array,
+    required: true
+  }
+});
+
+const selectedCategoria = ref('');
+const selectedSubcategoria = ref('');
+
+const filteredSubcategorias = computed(() => {
+  if (!selectedCategoria.value) return [];
+  return props.subCategorias.filter(sub => sub.categoriaId === selectedCategoria.value);
+});
+
+// Reset subcategoria when categoria changes
+watch(selectedCategoria, () => {
+  selectedSubcategoria.value = '';
+});
 </script>

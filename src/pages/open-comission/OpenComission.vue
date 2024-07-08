@@ -1,6 +1,11 @@
 <template>
     <div>
-        llele
+        <section>
+            <ComisionesTabMenu active="open-comission" />
+
+        </section>
+
+        <h1 class="text-2xl font-semibold">Open Comission</h1>
         <RouterView> </RouterView>
 
     </div>

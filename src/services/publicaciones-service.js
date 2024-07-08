@@ -30,7 +30,8 @@ export const getPublicacionById = async (id) => {
 
 export const getAllPublicaciones = async () => {
     try {
-        const response = await axios.get(API_BASE_URL + endpoints_publicaciones.getAllPublicaciones(), {
+        const response = await axios.get(`${API_BASE_URL + endpoints_publicaciones.getAllPublicaciones()}?fecha_orden=ASC`, {
+
             validateStatus: function(status) {
                 return status < 500;
             }

@@ -19,6 +19,8 @@ import Hojas from "./pages/open-comission/Hojas.vue";
 import Balance from "./pages/open-comission/Balance.vue";
 import Pedidos from "./pages/open-comission/Pedidos.vue";
 import NotFound from "./pages/NotFound.vue";
+import Politicas from "./pages/politicas/Politicas.vue";
+import CrearHoja from "./pages/open-comission/CrearHoja.vue";
 
 
 
@@ -161,6 +163,13 @@ const router = createRouter({
         },
 
         {
+            path:"/politicas",
+            name:'politicas',
+            component: Politicas,
+            props: true
+        },
+
+        {
             path:"/open-comission/",
             name:'open-comission',
             component: OpenComission,
@@ -171,6 +180,12 @@ const router = createRouter({
                     path:"hojas",
                     name:'comisiones-hojas',
                     component: Hojas
+                },
+
+                {
+                    path:"crear-hoja",
+                    name:'comisiones-crear-hoja',
+                    component: CrearHoja
                 },
 
                 {

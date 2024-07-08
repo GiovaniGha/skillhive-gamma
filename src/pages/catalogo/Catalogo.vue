@@ -2,14 +2,22 @@
     <div class="flex flex-col gap-3">
 
             <div>
-                <Buscar :categorias="categorias" :subCategorias="subCategorias"> </Buscar>
+                <Buscar :categorias="categorias" :subCategorias="subCategorias" />
             </div>
             
             <div class="">
                 
                     <div v-if="currentRoute.path === '/catalogo/comisiones'" class="flex flex-wrap gap-2">
-                        <ComisionCard></ComisionCard>
-                        <ComisionCard></ComisionCard>
+                        <ul class="flex flex-wrap gap-2">
+                            <li v-for="comision in comisiones" :key="comision.id" >
+                                <ComisionCard
+                                    :titulo="comision.titulo"
+                                    :descripcion="comision.descripcion"
+                                    :precio="comision.precio"
+                                    :imagen="comision.portada"
+                                />
+                              </li>
+                        </ul>
                     </div>
 
                     <div v-if="currentRoute.path === '/catalogo/publicaciones'" class="flex flex-wrap gap-2">
@@ -47,7 +55,7 @@
   import { ref, onMounted } from 'vue';
   import { useRoute } from 'vue-router';
 
-  import { getAllActivos } from '../../services/ventas-compras-service.js';
+  import { getAllActivos, getAllComisiones } from '../../services/ventas-compras-service.js';
   import { getCategorias, getSubcategorias } from '../../services/publicaciones-service';
 
   import ProductoCard from '../../components/catalogos/ProductoCard.vue';
@@ -63,11 +71,12 @@
   const subCategorias = ref([]);
 
   const activos = ref([]);
-  
+  const comisiones = ref([]);
+
     const fetchAllActivos = async () => {
         try {
             const response = await getAllActivos();
-            activos.value = response.map(activo => ({
+            activos.value = response.activos.map(activo => ({
                 id: activo.id || '',
                 precio: activo.precio || '',
                 publicacion_id: activo.publicacion?.id || '',
@@ -88,25 +97,43 @@
         }
     };
     
-  const recibirCategorias = async () => {
+    const fetchAllComisiones = async () => {
         try {
-            const response = await getCategorias();
-            categorias.value = response.categorias;
-            console.log('Categorías:', categorias.value , response);
-        } catch (error) {
-            console.error('Error al obtener categorias:', error);
-        }
-    }
+            const response = await getAllComisiones();
+            comisiones.value = response.comisiones.map(comision => ({
 
-    const recibirSubcategorias = async () => {
-        try {
-            const response = await getSubcategorias();
-            subCategorias.value = response.subCategorias;
-            console.log('Subcategorías:', subCategorias.value, response);
+                titulo: comision.titulo || 'ana',
+                descripcion: comision.descripcion || 'prueba 2',
+                precio: comision.precio || '6.99',
+                imagen: comision.imagen || '',
+               
+            }));
+            console.log('response:: ', response);
+
+            console.log('comisiones: ' , comisiones.value);
+
         } catch (error) {
-            console.error('Error al obtener subCategorias:', error);
+            console.error('Error al obtener las comisiones:', error);
         }
-    }
+    };
+
+    const recibirCategorias = async () => {
+  try {
+    const response = await getCategorias();
+    categorias.value = response;
+  } catch (error) {
+    console.error('Error al obtener categorías:', error);
+  }
+};
+    const recibirSubcategorias = async () => {
+  try {
+    const response = await getSubcategorias();
+    subCategorias.value = response;
+  } catch (error) {
+    console.error('Error al obtener subcategorías:', error);
+  }
+};
+
 
   
   onMounted(async () => {
@@ -118,6 +145,7 @@
     }
 
     fetchAllActivos();
+    fetchAllComisiones();
 });
   </script>
   

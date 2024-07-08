@@ -20,7 +20,6 @@ const props = defineProps({
 
 const tabs = [
     {name: 'comisiones-hojas',label: 'Hojas de Comisiones',},
-    {name: 'comisiones-balance',label: 'Balance',},
     {name: 'comisiones-pedidos',label: 'Pedidos',},
 ];
 

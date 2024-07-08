@@ -1,5 +1,6 @@
 import {API_BASE_URL } from './config'
 import axios from 'axios';
+import { ref } from 'vue';
 
 
 export const endpoints_auth = {
@@ -12,6 +13,17 @@ export const endpoints_auth = {
     confirmarCorreo: (codigo) => `/auth/confirmar-correo/${codigo}`,
 }
 
+export const sesionActiva = ref(localStorage.getItem('token') !== null);
+
+export const verificarSesionActiva = () => {
+  sesionActiva.value = localStorage.getItem('token') !== null;
+};
+
+export const logout = () => {
+    localStorage.removeItem('token');
+    sesionActiva.value = false;
+    console.log(sesionActiva.value)
+  };
 
 export const login = async (userData) => {
   try {
@@ -20,11 +32,17 @@ export const login = async (userData) => {
         return status < 500;
       }
     });
-    console.log('exito')
+    console.log('exito');
+
     if (response.status === 400) {
+
       console.error('Datos de inicio de sesión incorrectos:', response.data);
       throw new Error('Datos de inicio de sesión incorrectos');
     }
+    verificarSesionActiva();
+    const token = response.data.token;
+    localStorage.setItem('token', token);
+
     return response.data;
   } catch (error) {
     console.error('Error al ingresar:', error);
