@@ -6,9 +6,9 @@ export const endpoints_ventas_compras = {
     getAllActivos: () => `/ventas-compras-activos/activos`,
     getActivoById: (id) => `/ventas-compras-activos/activos/${id}`,
     getActivosUsuario: () => `/ventas-compras-activos/activos/propios/usuario`,
+    getActivoPropio: (id) => `/ventas-compras-activos/activos/propios/usuario/${id}`,
 
     postActivo: () => `/ventas-compras-activos/activos`,
-    postActivosUsuario: () => `/ventas-compras-activos/activos/propios/usuario`,
     
     putActivoById: (id) => `/ventas-compras-activos/activos/${id}`,
     putActivosRevision: (id) => `/ventas-compras-activos/publicaciones/${id}/subcategorias`,
@@ -16,7 +16,9 @@ export const endpoints_ventas_compras = {
     //carrito de compras
     getCarrito: () => `/ventas-compras-activos/carrito`,
     getActivoCarrito: (id) => `/ventas-compras-activos/carrito/${id}`,
-    deleteActivoCarrito: (id) => `/ventas-compras-activos/carrito/${id}`
+    deleteActivoCarrito: (id) => `/ventas-compras-activos/carrito/${id}`,
+
+    mandarRevision: (id, action) => `/ventas-compras-activos/activos/${id}/a-revision/${action}`,
 };
 
 //activos
@@ -70,10 +72,29 @@ export const getAllActivos = async () => {
       throw error;
     }
   };
+
+export const getActivoPropio = async (id) => {
+  try {
+    const response = await axios.get(API_BASE_URL + endpoints_ventas_compras.getActivoPropio(id), {
+      headers: {
+        'x-token': localStorage.getItem('token') || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzIwNDA1OTM0LCJleHAiOjE3MjA0OTIzMzR9.Dp4FqZNPbJ77RJLUsJInpmhoUpA9IaXj-aarNMRBhes',
+      }
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching activo propio:', error);
+    throw error;
+  }
+}
   
   export const postActivo = async (activoData) => {
     try {
-      const response = await axios.post(API_BASE_URL + endpoints_ventas_compras.postActivo(), activoData);
+      const response = await axios.post(API_BASE_URL + endpoints_ventas_compras.postActivo(), activoData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          'x-token': localStorage.getItem('token') || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzIwNDA1OTM0LCJleHAiOjE3MjA0OTIzMzR9.Dp4FqZNPbJ77RJLUsJInpmhoUpA9IaXj-aarNMRBhes',
+        },
+      });
       return response.data;
     } catch (error) {
       console.error('Error creating activo:', error);
@@ -93,7 +114,12 @@ export const getAllActivos = async () => {
   
   export const putActivoById = async (id, activoData) => {
     try {
-      const response = await axios.put(API_BASE_URL + endpoints_ventas_compras.putActivoById(id), activoData);
+      const response = await axios.put(API_BASE_URL + endpoints_ventas_compras.putActivoById(id), activoData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          'x-token': localStorage.getItem('token') || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzIwNDA1OTM0LCJleHAiOjE3MjA0OTIzMzR9.Dp4FqZNPbJ77RJLUsJInpmhoUpA9IaXj-aarNMRBhes',
+        }
+      });
       return response.data;
     } catch (error) {
       console.error('Error updating activo by ID:', error);
@@ -139,6 +165,20 @@ export const deleteActivoCarrito = async (id) => {
         return response.data;
     } catch (error) {
         console.error(`Error deleting activo ${id} from carrito:`, error);
+        throw error;
+    }
+};
+
+export const mandarRevision = async (id, action) => {
+    try {
+        const response = await axios.put(API_BASE_URL + endpoints_ventas_compras.mandarRevision(id, action), {}, {
+            headers: {
+              'x-token': localStorage.getItem('token') || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzIwNDA1OTM0LCJleHAiOjE3MjA0OTIzMzR9.Dp4FqZNPbJ77RJLUsJInpmhoUpA9IaXj-aarNMRBhes'
+            }
+        });
+        return response.data;
+    } catch (error) {
+        console.error(`Error mandando activo ${id} a revision:`, error);
         throw error;
     }
 };

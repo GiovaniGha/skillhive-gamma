@@ -8,7 +8,7 @@ export const endpoints_publicaciones = {
     putEditar: (id) => `/gestion-publicaciones/publicaciones/${id}/publicar-switch/:action`,
     publicarSwitch: (publicacionId, action) => `/gestion-publicaciones/publicaciones/${publicacionId}/publicar-switch/${action}`,
     getCategorias: () => `/gestion-publicaciones/categorias`,
-    getSubcategorias: () => `/gestion-publicaciones/subcategorias?catid=3`,
+    getSubcategorias: (catid) => `/gestion-publicaciones/subcategorias?catid=${catid}`,
     getEspecialidades: () => `/gestion-publicaciones/especialidades`,
     getSubespecialidades: () => `/gestion-publicaciones/subespecialidades?espid=1`,
 };
@@ -61,6 +61,9 @@ export const publicarSwitch = async (publicacionId, action) => {
         const response = await axios.put(API_BASE_URL + endpoints_publicaciones.publicarSwitch(publicacionId, action), {}, {
             validateStatus: function(status) {
                 return status < 500;
+            },
+            headers: {
+                'x-token': localStorage.getItem('token') || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzIwNDA1OTM0LCJleHAiOjE3MjA0OTIzMzR9.Dp4FqZNPbJ77RJLUsJInpmhoUpA9IaXj-aarNMRBhes'
             }
         });
         return response.data;
@@ -84,9 +87,9 @@ export const getCategorias = async () => {
     }
 };
 
-export const getSubcategorias = async () => {
+export const getSubcategorias = async (catid) => {
     try {
-        const response = await axios.get(API_BASE_URL + endpoints_publicaciones.getSubcategorias(), {
+        const response = await axios.get(API_BASE_URL + endpoints_publicaciones.getSubcategorias(catid), {
             validateStatus: function(status) {
                 return status < 500;
             }

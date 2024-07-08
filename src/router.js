@@ -18,6 +18,7 @@ import OpenComission from "./pages/open-comission/OpenComission.vue";
 import Hojas from "./pages/open-comission/Hojas.vue";
 import Balance from "./pages/open-comission/Balance.vue";
 import Pedidos from "./pages/open-comission/Pedidos.vue";
+import NotFound from "./pages/NotFound.vue";
 
 
 
@@ -143,12 +144,18 @@ const router = createRouter({
             name: 'publicacion',
             component: Publicacion,
             props: true 
-            
         },
 
         {
-            path:"/crear-editar",
-            name:'crear-editar',
+            path:"/crear/:tipo",
+            name:'crear',
+            component: CrearEditar,
+            props: true
+        },
+
+        {
+            path:"/editar/:tipo/:id",
+            name:'editar',
             component: CrearEditar,
             props: true
         },
@@ -180,6 +187,12 @@ const router = createRouter({
                 },
             ]
         },
+
+        {
+            path: "/not-found",
+            name: "not-found",
+            component: NotFound
+        }
 
         
 

@@ -18,7 +18,7 @@ import { RouterLink } from 'vue-router';
 const rutas = ref([
     {titulo: 'Inicio', url: '/', icono: IconHomeFilled},
     {titulo: 'Carrito', url: '/carrito', icono: IconShoppingCartFilled},
-    {titulo: 'Agregar', url: '/crear-editar', icono: IconCirclePlusFilled },
+    {titulo: 'Agregar', url: '/', icono: IconCirclePlusFilled },
     //{titulo: 'Mensajes', url: '/', icono: IconMessage},
     {titulo: 'Open comissions', url: '/open-comission', icono: IconCashBanknoteFilled},
     {titulo: 'Estadisticas', url: '/', icono: IconChartPieFilled}
