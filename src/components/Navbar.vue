@@ -16,10 +16,11 @@
         <div  class="form-control">
           <input type="text" placeholder="Search" class="input input-bordered input-primary w-24 md:w-auto" />
         </div>
-        <div v-if="sesionActiva.value" class="dropdown dropdown-end">
+        <div v-if="true" class="dropdown dropdown-end">
           <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
             <div class="w-10 rounded-full">
               <!-- Imagen del avatar -->
+              <img alt="Tailwind CSS Navbar component" src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
             </div>
           </div>
           <ul class="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
@@ -31,6 +32,9 @@
             </li>
             <li>
               <RouterLink to="/login" @click="handleLogout">Cerrar Sesión</RouterLink>
+            </li>
+            <li>
+              <RouterLink to="/mis-productos">Mis productos</RouterLink>
             </li>
             <li>
               <RouterLink to="/politicas">Politicas de privacidad</RouterLink>

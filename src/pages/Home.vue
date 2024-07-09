@@ -1,5 +1,5 @@
 <template>
-    <div class="w-full">
+    <div class="w-screen">
         <section class="flex flex-col">
             <h1 class="text-2xl">Inicio</h1>
         </section>

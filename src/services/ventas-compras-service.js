@@ -43,6 +43,8 @@ export const endpoints_ventas_compras = {
     obtenerCarrito: () => `/ventas-compras-activos/carrito`,
     agregarAlCarrito: (id) => `/ventas-compras-activos/carrito/${id}`,
     eliminarDelCarrito: (id) => `/ventas-compras-activos/carrito/${id}`,
+
+    obtenerActivosComprados: () => '/ventas-compras-activos/activos/propios/comprados'
 };
 
 //activos
@@ -477,3 +479,18 @@ export const eliminarDelCarrito = async (id) => {
         throw error;
     }
 };
+
+export const obtenerActivosComprados = async () => {
+    try {
+        const response = await axios.get(API_BASE_URL + endpoints_ventas_compras.obtenerActivosComprados(), {
+            headers: {
+              'x-token': localStorage.getItem('token') || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzIwNDA1OTM0LCJleHAiOjE3MjA0OTIzMzR9.Dp4FqZNPbJ77RJLUsJInpmhoUpA9IaXj-aarNMRBhes'
+            }
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching activos comprados:', error);
+        throw error;
+    }
+};
+

@@ -1,13 +1,13 @@
 <template>
-    <div class=" h-fit">
-      <div class="card h-fit card-side bg-base-400 shadow-xl">
-        <figure class="h-48"><img :src="portada" class="" :alt="titulo"/></figure>
+    <div class=" h-fit w-80 ">
+      <div class="card h-fit card-side bg-base-400 shadow-xl flex items-center">
+        <figure class="h-fit"><img :src="portada"  class="" :alt="titulo"/></figure>
         <div class="card-body p-0 px-4 pt-2 flex flex-col gap-1 justify-center w-80">
           <h2 class="card-title text-sm">{{ titulo }}</h2>
           <section class="flex gap-2 items-center">
             <div class="avatar">
               <div class="w-7 rounded-full">
-                <img :src="foto" />
+                <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
               </div>
             </div>
             <small class="text-xs">{{ nombre }}</small>
@@ -23,11 +23,11 @@
             <div class="p-3 badge badge-primary badge-outline">5.0</div>
           </section>
           <section>
-            <p class="line-clamp-2 text-sm text-gray-300">{{ descripcion_corta }}</p>
+            <p class="line-clamp-1 text-sm text-gray-300">{{ descripcion_corta }}</p>
           </section>
-          <div class="card-actions">
+          <div class="card-actions pb-3">
             <p>$ {{ precio }}</p>
-            <button type="button" @click="agregarCarrito" class="btn btn-primary btn-xs px-2">
+            <button type="button" @click="agregarCarrito" class="btn btn-primary btn-xs px-2" :disabled="disabledCarritoButton">
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-shopping-cart-plus text-white">
                 <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
                 <path d="M4 19a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
@@ -43,8 +43,9 @@
     </div>
   </template>
   
-  <script setup>
-  import { defineProps } from 'vue';
+<script setup>
+  import { defineProps, ref } from 'vue';
+  import { agregarAlCarrito } from '../../services/ventas-compras-service';
   
   const props = defineProps({
     id: {
@@ -84,10 +85,20 @@
       required: true
     }
   });
+
+const disabledCarritoButton = ref(false);
   
-  const agregarCarrito = () => {
-    alert('Producto añadido al carrito');
-  };
-  </script>
+const agregarCarrito = async () => {
+  disabledCarritoButton.value = true;
+  try {
+    const data = await agregarAlCarrito(props.id);
+    console.log(data);
+    disabledCarritoButton.value = false;
+  } catch (error) {
+    console.log(error);
+    disabledCarritoButton.value = false;
+  }
+};
+</script>
   
   

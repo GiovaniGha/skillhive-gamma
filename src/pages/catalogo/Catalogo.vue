@@ -30,7 +30,7 @@
 
                     </div>
 
-                    <div v-if="currentRoute.path === '/catalogo/productos'" class="flex  ">
+                    <div v-if="currentRoute.path === '/catalogo/productos'" class="flex flex-wrap  ">
                         <ul class="flex flex-wrap gap-2">
                             <li v-for="activo in activos" :key="activo.id" >
                                 <ProductoCard

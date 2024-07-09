@@ -21,6 +21,7 @@ import Pedidos from "./pages/open-comission/Pedidos.vue";
 import NotFound from "./pages/NotFound.vue";
 import Politicas from "./pages/politicas/Politicas.vue";
 import CrearHoja from "./pages/open-comission/CrearHoja.vue";
+import MisProductos from "./pages/MisProductos.vue";
 
 
 
@@ -104,13 +105,27 @@ const router = createRouter({
         {
             path: "/carrito",
             name: "carrito",
-            component: Carrito
+            component: Carrito,
         },
 
         {
-            path: "/pagar",
-            name: "pagar",
-            component: Pagar
+            path: '/mis-productos',
+            name: 'mis-productos',
+            component: MisProductos
+        },
+
+        {
+            path: "/pagar/carrito",
+            name: "pagar-carrito",
+            component: Pagar,
+            props: true 
+        },
+
+        {
+            path: "/pagar/activo/:id",
+            name: "pagar-activo",
+            component: Pagar,
+            props: true 
         },
         
         {
